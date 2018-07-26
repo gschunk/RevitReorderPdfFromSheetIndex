@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Pheinex, LLC.")]
 [assembly: AssemblyProduct("RevitReorderPdf Revit Add-In")]
-[assembly: AssemblyCopyright("Copyright 2016 © Greg Schunk Pheinex LLC.")]
+[assembly: AssemblyCopyright("Copyright 2018 © Pheinex LLC.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2016.0.0.0")]
-[assembly: AssemblyFileVersion("2016.0.0.0")]
+[assembly: AssemblyVersion("2016.1.0.0")]
+[assembly: AssemblyFileVersion("2016.1.0.0")]

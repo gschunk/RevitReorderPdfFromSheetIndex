@@ -1,18 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RevitAddIns>
-  <AddIn Type="Command">
-    <Text>Command RevitReorderPdf</Text>
-    <Description>Some description for RevitReorderPdf</Description>
-    <Assembly>RevitReorderPdf.dll</Assembly>
-    <FullClassName>RevitReorderPdf.Command</FullClassName>
-    <ClientId>a8e1839e-472d-4117-b6e2-0ac7e8d1a939</ClientId>
-    <VendorId>INEX</VendorId>
-    <VendorDescription>Pheinex LLC, http://www.pheinex.com</VendorDescription>
-  </AddIn>
   <AddIn Type="Application">
     <Name>Application RevitReorderPdf</Name>
     <Assembly>RevitReorderPdf.dll</Assembly>
-    <FullClassName>RevitReorderPdf.App</FullClassName>
+    <FullClassName>RevitReorderPdf.RevitPdfSetupApp</FullClassName>
     <ClientId>c606d14c-a6d8-41d9-9d72-a0ebd86cb317</ClientId>
     <VendorId>INEX</VendorId>
     <VendorDescription>Pheinex LLC, http://www.pheinex.com</VendorDescription>
