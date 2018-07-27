@@ -22,7 +22,7 @@ using System.Reflection;
 
 namespace RevitReorderPdf
 {
-    public class TaskDialogBoxErrorLogger : IErrorLogger
+    class TaskDialogBoxErrorLogger : IErrorLogger
     {
         public void Log(string message)
         {

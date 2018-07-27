@@ -17,7 +17,7 @@
 
 namespace RevitReorderPdf
 {
-    public class NullColumnEntry : ColumnEntry
+    class NullColumnEntry : ColumnEntry
     {
         public NullColumnEntry() : base(null)
         {

@@ -25,7 +25,7 @@ using System.Runtime.Serialization;
 namespace RevitReorderPdf
 {
     [DataContract(IsReference = true)]
-    abstract public class ObservableObject : INotifyPropertyChanged
+    abstract class ObservableObject : INotifyPropertyChanged
     {
         private ISet<string> propertyNames;
 

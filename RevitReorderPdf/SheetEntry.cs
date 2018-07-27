@@ -19,7 +19,7 @@ using Autodesk.Revit.DB;
 
 namespace RevitReorderPdf
 {
-    public class SheetEntry
+    class SheetEntry
     {
         public ViewSheet Sheet { get; }
 

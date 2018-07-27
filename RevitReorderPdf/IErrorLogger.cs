@@ -17,7 +17,7 @@
 
 namespace RevitReorderPdf
 {
-    public interface IErrorLogger
+    interface IErrorLogger
     {
         void Log(string message);
         void Log(string title, string message);

@@ -17,7 +17,7 @@
 
 namespace RevitReorderPdf
 {
-    public static class WindowExtensions
+    static class WindowExtensions
     {
         public static void SetRevitWindowAsOwner(this System.Windows.Window window)
         {

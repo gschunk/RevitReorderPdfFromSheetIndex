@@ -24,7 +24,7 @@ using System.Linq;
 
 namespace RevitReorderPdf
 {
-    public class ReorderExistingPdfViewModel : ObservableObject
+    class ReorderExistingPdfViewModel : ObservableObject
     {
         private static string defaultSelectedPdfFile = "Select PDF file for reordering.";
 
