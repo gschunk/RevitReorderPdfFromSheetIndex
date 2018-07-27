@@ -101,7 +101,20 @@ namespace RevitReorderPdf
             {
                 if (SelectedSchedule == null) { return null; }
 
-                return new ReorderOptions(SelectedSchedule, SheetsForPublish.Select(se => se.Sheet).ToArray(), InclusionExclusionColumn, SortColumn);
+                var unsortedSheets =
+                    new FilteredElementCollector(Document)
+                    .OfClass(typeof(ViewSheet))
+                    .Cast<ViewSheet>()
+                    .Where(vs => SheetIsForPublish(vs))
+                    .ToArray();
+
+                return new ReorderOptions(
+                    SelectedSchedule,
+                    SheetsForPublish.Select(se => se.Sheet).ToArray(),
+                    unsortedSheets,
+                    InclusionExclusionColumn,
+                    SortColumn,
+                    SelectedPdfFile);
             }
         }
 
@@ -219,6 +232,7 @@ namespace RevitReorderPdf
                 this.SelectedSchedule = Schedules.Where(schedule => schedule.ViewName == ReorderExistingPdfCommand.ReorderOptions.Schedule.ViewName).FirstOrDefault();
                 this.InclusionExclusionColumn = ReorderExistingPdfCommand.ReorderOptions.InclusionColumn;
                 this.SortColumn = ReorderExistingPdfCommand.ReorderOptions.SortColumn;
+                this.SelectedPdfFile = ReorderExistingPdfCommand.ReorderOptions.PdfFileName;
             }
 
             this.PropertyChanged += ReorderExistingPdfViewModel_PropertyChanged;

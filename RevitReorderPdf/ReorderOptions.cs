@@ -23,15 +23,19 @@ namespace RevitReorderPdf
     {
         public ColumnEntry InclusionColumn { get; }
         public ViewSchedule Schedule { get; }
-        public ViewSheet[] Sheets { get; }
+        public ViewSheet[] SortedSheets { get; }
         public ColumnEntry SortColumn { get; }
+        public string PdfFileName { get; }
+        public ViewSheet[] UnsortedSheets { get; }
 
-        public ReorderOptions(ViewSchedule schedule, ViewSheet[] sheets, ColumnEntry inclusionColumn, ColumnEntry sortColumn)
+        public ReorderOptions(ViewSchedule schedule, ViewSheet[] sortedSheets, ViewSheet[] unsortedSheets, ColumnEntry inclusionColumn, ColumnEntry sortColumn, string pdfFileName)
         {
             this.InclusionColumn = inclusionColumn;
             this.Schedule = schedule;
-            this.Sheets = sheets;
+            this.SortedSheets = sortedSheets;
             this.SortColumn = sortColumn;
+            this.PdfFileName = pdfFileName;
+            this.UnsortedSheets = unsortedSheets;
         }
     }
 }

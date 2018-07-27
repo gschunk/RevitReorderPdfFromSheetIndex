@@ -20,7 +20,11 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using RevitReorderPdf.PdfUtilities;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 #endregion
 
 namespace RevitReorderPdf
@@ -53,7 +57,18 @@ namespace RevitReorderPdf
                     if (publishWindow.DialogResult == true)
                     {
                         ReorderOptions = publishWindow.ReorderOptions;
-                        TaskDialog.Show("Info", "Do reorder!");
+
+                        var inputFilePath = ReorderOptions.PdfFileName;
+                        var directory = Path.GetDirectoryName(inputFilePath);
+                        var outputFileName = string.Format("{0} - Reordered.pdf", Path.GetFileNameWithoutExtension(inputFilePath));
+                        var outputFilePath = Path.Combine(directory, outputFileName);
+
+                        var sortMatrix = GetSortMatrix(ReorderOptions.UnsortedSheets, ReorderOptions.SortedSheets);
+
+                        var reorderer = new PdfEditor();
+                        reorderer.ReorderPdf(inputFilePath, outputFilePath, sortMatrix);
+
+                        Process.Start(outputFilePath);
                     }
                 }
             }
@@ -65,5 +80,37 @@ namespace RevitReorderPdf
 
             return Result.Succeeded;
         }
+
+        /// <summary>
+        /// Creates a dictionary mapping new page number to old page number for sheet reordering
+        /// </summary>
+        /// <param name="unsortedSheets"></param>
+        /// <param name="sortedSheets"></param>
+        /// <returns>A dictionay where the new page number is the key, and the old page number is the value</returns>
+        private Dictionary<int, int> GetSortMatrix(ViewSheet[] unsortedSheets, ViewSheet[] sortedSheets)
+        {
+            if (unsortedSheets.Length != sortedSheets.Length)
+            {
+                throw new Exception("Lengths of sheets arrays to not match.");
+            }
+
+            var unsortedIndexes = new Dictionary<string, int>();
+            for (int i = 0; i < unsortedSheets.Length; i++)
+            {
+                var currentPageNumber = i + 1;
+                unsortedIndexes[unsortedSheets[i].SheetNumber] = currentPageNumber;
+            }
+
+            var sortIndexes = new Dictionary<int, int>();
+            for (int i = 0; i < sortedSheets.Length; i++)
+            {
+                var newPageNumber = i + 1;
+                var oldPageNumber = unsortedIndexes[sortedSheets[i].SheetNumber];
+                sortIndexes[newPageNumber] = oldPageNumber;
+            }
+
+            return sortIndexes;
+        }
+
     }
 }
