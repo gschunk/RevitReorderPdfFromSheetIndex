@@ -21,12 +21,14 @@ namespace RevitReorderPdf
 {
     public class ReorderOptions
     {
-        public ColumnEntry InclusionColumn { get; }
-        public ViewSchedule Schedule { get; }
-        public ViewSheet[] SortedSheets { get; }
-        public ColumnEntry SortColumn { get; }
-        public string PdfFileName { get; }
-        public ViewSheet[] UnsortedSheets { get; }
+        public ColumnEntry InclusionColumn { get; set; }
+        public ViewSchedule Schedule { get; set; }
+        public ViewSheet[] SortedSheets { get; set; }
+        public ColumnEntry SortColumn { get; set; }
+        public string PdfFileName { get; set; }
+        public ViewSheet[] UnsortedSheets { get; set; }
+
+        public ReorderOptions() { }
 
         public ReorderOptions(ViewSchedule schedule, ViewSheet[] sortedSheets, ViewSheet[] unsortedSheets, ColumnEntry inclusionColumn, ColumnEntry sortColumn, string pdfFileName)
         {

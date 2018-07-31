@@ -39,7 +39,7 @@ namespace RevitReorderPdf
         private Application Application { get { return UIApplication.Application; } }
         private Document Document { get { return UIDocument.Document; } }
 
-        public static ReorderOptions ReorderOptions { get; private set; }
+        public static ReorderOptions ReorderOptions { get; private set; } = new ReorderOptions();
 
         public static bool CanHaveInclusionColumn { get; set; } = false;
 
