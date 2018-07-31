@@ -228,7 +228,7 @@ namespace RevitReorderPdf
             this.Document = document;
             this.Logger = logger;
 
-            if (ReorderExistingPdfCommand.ReorderOptions == null)
+            if (ReorderExistingPdfCommand.ReorderOptions?.Schedule == null)
             {
                 this.SelectedSchedule = Schedules.FirstOrDefault();
             }
