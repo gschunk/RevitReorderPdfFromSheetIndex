@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 #endregion
 
 namespace RevitReorderPdf
@@ -96,6 +97,7 @@ namespace RevitReorderPdf
             File.Copy(inputFilePath, temporarySaveFilePath, true);
             File.Copy(outputFilePath, inputFilePath, true);
             File.Delete(temporarySaveFilePath);
+            File.Delete(outputFilePath);
         }
 
         private void DisplayPdf(string filePath)
@@ -106,7 +108,7 @@ namespace RevitReorderPdf
         /// <summary>
         /// Creates a dictionary mapping new page number to old page number for sheet reordering
         /// </summary>
-        /// <param name="unsortedSheets"></param>
+        /// <param name="alphabetizedSheets"></param>
         /// <param name="sortedSheets"></param>
         /// <returns>A dictionay where the new page number is the key, and the old page number is the value</returns>
         private Dictionary<int, int> GetSortMatrix(ViewSheet[] unsortedSheets, ViewSheet[] sortedSheets)
@@ -116,11 +118,13 @@ namespace RevitReorderPdf
                 throw new Exception("Lengths of sheets arrays to not match.");
             }
 
+            var alphabetizedSheets = unsortedSheets.OrderBy(vs => vs.SheetNumber).ToArray();
+
             var unsortedIndexes = new Dictionary<string, int>();
-            for (int i = 0; i < unsortedSheets.Length; i++)
+            for (int i = 0; i < alphabetizedSheets.Length; i++)
             {
                 var currentPageNumber = i + 1;
-                unsortedIndexes[unsortedSheets[i].SheetNumber] = currentPageNumber;
+                unsortedIndexes[alphabetizedSheets[i].SheetNumber] = currentPageNumber;
             }
 
             var sortIndexes = new Dictionary<int, int>();
