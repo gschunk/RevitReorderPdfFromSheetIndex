@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RevitReorderPdf")]
-[assembly: AssemblyDescription("Revit Add-In Description for RevitReorderPdf")]
+[assembly: AssemblyTitle("Revit Reorder PDF")]
+[assembly: AssemblyDescription("Revit Add-In - Reorders existing PDF files based on sheet index")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Pheinex, LLC.")]
-[assembly: AssemblyProduct("RevitReorderPdf Revit Add-In")]
-[assembly: AssemblyCopyright("Copyright 2018 © Pheinex LLC.")]
+[assembly: AssemblyProduct("RevitReorderPdf")]
+[assembly: AssemblyCopyright("Copyright © 2018 Pheinex LLC.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
