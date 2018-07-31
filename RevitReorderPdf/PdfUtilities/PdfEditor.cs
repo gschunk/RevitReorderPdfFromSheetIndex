@@ -17,65 +17,14 @@
 
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace RevitReorderPdf.PdfUtilities
 {
     class PdfEditor
     {
-        public void ReversePdf(string inputFile, string outputFile)
-        {
-            Document document = null;
-            PdfCopy writer = null;
-            PdfReader reader = null;
-            try
-            {
-                document = new Document();
-                writer = new PdfCopy(document, new FileStream(outputFile, FileMode.Create));
-                if (writer == null)
-                {
-                    return;
-                }
-
-                document.Open();
-
-                reader = new PdfReader(inputFile);
-
-                var getter = new BookmarkReader(reader);
-                var bookmarks = new List<Dictionary<string, object>>();
-
-                var pages = 0;
-
-                for (int i = reader.NumberOfPages; i > 0; i--)
-                {
-                    PdfImportedPage page = writer.GetImportedPage(reader, i);
-                    writer.AddPage(page);
-                    pages++;
-                    var referencingBookmarks = getter.GetBookmarksForPage(i);
-                    if (referencingBookmarks.Count > 0)
-                    {
-                        var oldPageNumber = i;
-                        var newPageNumber = pages;
-                        SimpleBookmark.ShiftPageNumbers(referencingBookmarks, newPageNumber - oldPageNumber, null);
-                        foreach (var bk in referencingBookmarks)
-                        {
-                            bookmarks.Add(new Dictionary<string, object>(bk));
-                        }
-                    }
-                }
-
-                writer.Outlines = bookmarks;
-            }
-            finally
-            {
-                reader?.Dispose();
-                writer?.Dispose();
-                document?.Dispose();
-            }
-        }
-
         public void ReorderPdf(string inputFile, string outputFile, Dictionary<int, int> sortKeys)
         {
             Document document = null;
@@ -85,42 +34,104 @@ namespace RevitReorderPdf.PdfUtilities
             {
                 document = new Document();
                 writer = new PdfCopy(document, new FileStream(outputFile, FileMode.Create));
-                if (writer == null)
-                {
-                    return;
-                }
+                if (writer == null) { return; }
 
                 document.Open();
-
                 reader = new PdfReader(inputFile);
 
-                var getter = new BookmarkReader(reader);
-                var bookmarks = new List<Dictionary<string, object>>();
-                
-                for (int newPageNumber = 1; newPageNumber <= sortKeys.Count; newPageNumber++)
-                {
-                    var oldPageNumber = sortKeys[newPageNumber];
-                    PdfImportedPage page = writer.GetImportedPage(reader, oldPageNumber);
-                    var referencingBookmarks = getter.GetBookmarksForPage(oldPageNumber);
-                    writer.AddPage(page);
-                    if (referencingBookmarks.Count > 0)
-                    {
-                        var shift = newPageNumber - oldPageNumber;
-                        SimpleBookmark.ShiftPageNumbers(referencingBookmarks, shift, null);
-                        foreach (var bk in referencingBookmarks)
-                        {
-                            bookmarks.Add(new Dictionary<string, object>(bk));
-                        }
-                    }
-                }
+                CopyPages(reader, writer, sortKeys);
+                CopyBookmarks(reader, writer, sortKeys);
 
-                writer.Outlines = bookmarks;
             }
             finally
             {
                 reader?.Dispose();
                 writer?.Dispose();
                 document?.Dispose();
+            }
+        }
+
+        private void CopyPages(PdfReader reader, PdfCopy writer, Dictionary<int, int> sortKeys)
+        {
+            for (int newPageNumber = 1; newPageNumber <= sortKeys.Count; newPageNumber++)
+            {
+                var oldPageNumber = sortKeys[newPageNumber];
+                PdfImportedPage page = writer.GetImportedPage(reader, oldPageNumber);
+                writer.AddPage(page);
+            }
+        }
+
+        private void CopyBookmarks(PdfReader reader, PdfCopy writer, Dictionary<int, int> sortKeys)
+        {
+            var outlines = SimpleBookmark.GetBookmark(reader);
+            var reverseSortKeys = new Dictionary<int, int>();
+            foreach (var newPageNumber in sortKeys.Keys)
+            {
+                var oldPageNumber = sortKeys[newPageNumber];
+                reverseSortKeys.Add(oldPageNumber, newPageNumber);
+            }
+
+            UpdateTargetPages(outlines, reverseSortKeys);
+
+            SortBookmarks(outlines);
+
+            writer.Outlines = outlines;
+        }
+
+        private void UpdateTargetPages(IList<Dictionary<string, object>> existingOutlines, Dictionary<int, int> reverseSortKeys)
+        {
+            if (existingOutlines == null) { return; }
+
+            foreach (var outline in existingOutlines)
+            {
+                object oldPageTarget;
+                outline.TryGetValue("Page", out oldPageTarget);
+                if (oldPageTarget != null)
+                {
+                    var oldPageNumber = int.Parse(((string)oldPageTarget).Split(' ')[0]);
+                    var newPageNumber = reverseSortKeys[oldPageNumber];
+                    var shift = newPageNumber - oldPageNumber;
+                    var pageOutlines = new List<Dictionary<string, object>>();
+                    pageOutlines.Add(outline);
+                    SimpleBookmark.ShiftPageNumbers(pageOutlines, shift, null);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.Print("No target page");
+                }
+                object children;
+                outline.TryGetValue("Kids", out children);
+                UpdateTargetPages(children as IList<Dictionary<string, object>>, reverseSortKeys);
+            }
+        }
+
+        private void SortBookmarks(IList<Dictionary<string, object>> outlines)
+        {
+            if (outlines == null) { return; }
+
+            var sortedOutlines = outlines.OrderBy(ol => GetOutlineTargetPage(ol)).ToArray();
+
+            for (int i = 0; i < outlines.Count; i++)
+            {
+                outlines[i] = sortedOutlines[i];
+                object children;
+                outlines[i].TryGetValue("Kids", out children);
+                SortBookmarks(children as IList<Dictionary<string, object>>);
+            }
+        }
+
+        private int GetOutlineTargetPage(Dictionary<string, object> outline)
+        {
+            object pageTarget;
+            outline.TryGetValue("Page", out pageTarget);
+            if (pageTarget == null)
+            {
+                return 0;
+            }
+            else
+            {
+                var pageNumber = int.Parse(((string)pageTarget).Split(' ')[0]);
+                return pageNumber;
             }
         }
     }
