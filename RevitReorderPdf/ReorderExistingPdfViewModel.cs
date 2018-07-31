@@ -40,6 +40,11 @@ namespace RevitReorderPdf
 
         protected IErrorLogger Logger { get; }
 
+        public bool CanSelectInclusionColumn
+        {
+            get { return ReorderExistingPdfCommand.CanHaveInclusionColumn; }
+        }
+
         public bool CanReorder
         {
             get

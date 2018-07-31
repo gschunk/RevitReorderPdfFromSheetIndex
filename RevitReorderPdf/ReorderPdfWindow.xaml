@@ -5,6 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Reorder Existing PDF File" Width="550" Height="500" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner" >
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*" />
@@ -35,7 +38,10 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <GroupBox Grid.Column="0" Header="Column For Inclusion:">
+                <GroupBox
+                    Grid.Column="0"
+                    Header="Column For Inclusion:"
+                    Visibility="{Binding Path=CanSelectInclusionColumn, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <ComboBox
                     Margin="0,5,0,0"
                     ItemsSource="{Binding Path=InclusionColumns}"

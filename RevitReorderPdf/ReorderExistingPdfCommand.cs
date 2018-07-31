@@ -40,6 +40,8 @@ namespace RevitReorderPdf
 
         public static ReorderOptions ReorderOptions { get; private set; }
 
+        public static bool CanHaveInclusionColumn { get; set; } = false;
+
         public Result Execute(
             ExternalCommandData commandData,
             ref string message,
