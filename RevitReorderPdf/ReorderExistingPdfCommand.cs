@@ -65,12 +65,9 @@ namespace RevitReorderPdf
                         var outputFileName = string.Format("{0} - Reordered.pdf", Path.GetFileNameWithoutExtension(inputFilePath));
                         var outputFilePath = Path.Combine(directory, outputFileName);
 
-                        var sortMatrix = GetSortMatrix(ReorderOptions.UnsortedSheets, ReorderOptions.SortedSheets);
-
-                        var reorderer = new PdfEditor();
-                        reorderer.ReorderPdf(inputFilePath, outputFilePath, sortMatrix);
-
-                        Process.Start(outputFilePath);
+                        CreateSortedPdfFile(inputFilePath, outputFilePath);
+                        ReplaceOriginalFile(inputFilePath, outputFilePath);
+                        DisplayPdf(inputFilePath);
                     }
                 }
             }
@@ -81,6 +78,29 @@ namespace RevitReorderPdf
             }
 
             return Result.Succeeded;
+        }
+
+        private void CreateSortedPdfFile(string inputFilePath, string outputFilePath)
+        {
+            var sortMatrix = GetSortMatrix(ReorderOptions.UnsortedSheets, ReorderOptions.SortedSheets);
+            var reorderer = new PdfEditor();
+            reorderer.ReorderPdf(inputFilePath, outputFilePath, sortMatrix);
+        }
+
+        private void ReplaceOriginalFile(string inputFilePath, string outputFilePath)
+        {
+            var directory = Path.GetDirectoryName(inputFilePath);
+            var temporarySaveFileName = string.Format("{0} - Temporary.pdf", Path.GetFileNameWithoutExtension(inputFilePath));
+            var temporarySaveFilePath = Path.Combine(directory, temporarySaveFileName);
+
+            File.Copy(inputFilePath, temporarySaveFilePath, true);
+            File.Copy(outputFilePath, inputFilePath, true);
+            File.Delete(temporarySaveFilePath);
+        }
+
+        private void DisplayPdf(string filePath)
+        {
+            Process.Start(filePath);
         }
 
         /// <summary>
