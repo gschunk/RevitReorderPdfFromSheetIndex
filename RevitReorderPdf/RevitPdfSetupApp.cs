@@ -50,9 +50,9 @@ namespace RevitReorderPdf
                 var dllName = GetAssemblyName();
                 var panelName = "PDF";
                 var buttonName = string.Format("{0}Button", nameof(ReorderExistingPdfCommand));
-                var buttonText = "Reorder Existing PDF";
+                var buttonText = "Reorder\nExisting PDF";
                 var buttonHint = "Reorder Existing PDF File Based on Sheet Index";
-                var imageName = "ReorderPdf_32x32.png";
+                var imageName = "RevitReorderPdf.Images.ReorderPdf_32x32.png";
                 var className = typeof(ReorderExistingPdfCommand).FullName;
 
                 var panel = uiControlledApplication.CreateRibbonPanel(panelName);
