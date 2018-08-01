@@ -2,6 +2,7 @@
 ## An add-in for Autodesk Revit which re-orders an existing PDF from a sheet index.
 
 ### Dependencies:
+ - Autodesk Revit .NET API
  - itext 5
  
 ### Usage
