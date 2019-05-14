@@ -52,6 +52,7 @@ namespace RevitReorderPdf
                 return
                     SelectedSchedule != null &&
                     SelectedPdfFile != defaultSelectedPdfFile &&
+                    SortColumn != null &&
                     File.Exists(SelectedPdfFile);
             }
         }
