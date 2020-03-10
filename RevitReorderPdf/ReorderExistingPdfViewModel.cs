@@ -235,7 +235,11 @@ namespace RevitReorderPdf
             }
             else
             {
+#if REVIT2019
+                this.SelectedSchedule = Schedules.Where(schedule => schedule.Name == ReorderExistingPdfCommand.ReorderOptions.Schedule.Name).FirstOrDefault();
+#else
                 this.SelectedSchedule = Schedules.Where(schedule => schedule.ViewName == ReorderExistingPdfCommand.ReorderOptions.Schedule.ViewName).FirstOrDefault();
+#endif
                 this.InclusionExclusionColumn = ReorderExistingPdfCommand.ReorderOptions.InclusionColumn;
                 this.SortColumn = ReorderExistingPdfCommand.ReorderOptions.SortColumn;
                 this.SelectedPdfFile = ReorderExistingPdfCommand.ReorderOptions.PdfFileName;
