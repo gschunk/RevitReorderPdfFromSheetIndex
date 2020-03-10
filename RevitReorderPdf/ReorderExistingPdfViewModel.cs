@@ -272,7 +272,7 @@ namespace RevitReorderPdf
 
         protected bool SheetIsForPublish(ViewSheet sheet)
         {
-            if (InclusionExclusionColumn == null) { return true; }
+            if (InclusionExclusionColumn?.Parameter == null) { return true; }
 
             var inclusionParameter = sheet.get_Parameter(InclusionExclusionColumn.Parameter.Definition);
 
