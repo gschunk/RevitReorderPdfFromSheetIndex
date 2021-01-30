@@ -7,20 +7,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitReorderPdf", "RevitReo
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		2017 Debug|Any CPU = 2017 Debug|Any CPU
-		2017 Release|Any CPU = 2017 Release|Any CPU
 		2018 Debug|Any CPU = 2018 Debug|Any CPU
 		2018 Release|Any CPU = 2018 Release|Any CPU
 		2019 Debug|Any CPU = 2019 Debug|Any CPU
 		2019 Release|Any CPU = 2019 Release|Any CPU
 		2020 Debug|Any CPU = 2020 Debug|Any CPU
 		2020 Release|Any CPU = 2020 Release|Any CPU
+		2021 Debug|Any CPU = 2021 Debug|Any CPU
+		2021 Release|Any CPU = 2021 Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{29C2A6CE-0778-44F4-BB53-47739A303421}.2017 Debug|Any CPU.ActiveCfg = 2017 Debug|Any CPU
-		{29C2A6CE-0778-44F4-BB53-47739A303421}.2017 Debug|Any CPU.Build.0 = 2017 Debug|Any CPU
-		{29C2A6CE-0778-44F4-BB53-47739A303421}.2017 Release|Any CPU.ActiveCfg = 2017 Release|Any CPU
-		{29C2A6CE-0778-44F4-BB53-47739A303421}.2017 Release|Any CPU.Build.0 = 2017 Release|Any CPU
 		{29C2A6CE-0778-44F4-BB53-47739A303421}.2018 Debug|Any CPU.ActiveCfg = 2018 Debug|Any CPU
 		{29C2A6CE-0778-44F4-BB53-47739A303421}.2018 Debug|Any CPU.Build.0 = 2018 Debug|Any CPU
 		{29C2A6CE-0778-44F4-BB53-47739A303421}.2018 Release|Any CPU.ActiveCfg = 2018 Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{29C2A6CE-0778-44F4-BB53-47739A303421}.2020 Debug|Any CPU.Build.0 = 2020 Debug|Any CPU
 		{29C2A6CE-0778-44F4-BB53-47739A303421}.2020 Release|Any CPU.ActiveCfg = 2020 Release|Any CPU
 		{29C2A6CE-0778-44F4-BB53-47739A303421}.2020 Release|Any CPU.Build.0 = 2020 Release|Any CPU
+		{29C2A6CE-0778-44F4-BB53-47739A303421}.2021 Debug|Any CPU.ActiveCfg = 2021 Debug|Any CPU
+		{29C2A6CE-0778-44F4-BB53-47739A303421}.2021 Debug|Any CPU.Build.0 = 2021 Debug|Any CPU
+		{29C2A6CE-0778-44F4-BB53-47739A303421}.2021 Release|Any CPU.ActiveCfg = 2021 Release|Any CPU
+		{29C2A6CE-0778-44F4-BB53-47739A303421}.2021 Release|Any CPU.Build.0 = 2021 Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
