@@ -192,9 +192,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="RevitReorderPdf.addin">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="ReorderPdfWindow.xaml">
@@ -214,7 +211,9 @@
     <PostBuildEvent>SET Config=$(ConfigurationName)
 SET RevitYear=%25Config:~0,4%25
 
-copy "$(ProjectDir)$(OutDir)RevitReorderPdf.dll" "C:\ProgramData\Revit PEC\PECDLLs\Revit %25RevitYear%25\Pheinex\"
-copy "$(ProjectDir)$(OutDir)itextsharp.dll" "C:\ProgramData\Revit PEC\PECDLLs\Revit %25RevitYear%25\Pheinex\"</PostBuildEvent>
+call "C:\Users\greg\OneDrive - Pheinex LLC\Code\Signing\SignAndTimestamp.bat"  "$(ProjectDir)$(OutDir)$(TargetFileName)" 
+
+xcopy "$(ProjectDir)$(OutDir)RevitReorderPdf.dll" "C:\ProgramData\Autodesk\Revit\Addins\%25RevitYear%25\Pheinex\PEC Shared\" /F /R /Y /I
+copy "$(ProjectDir)$(OutDir)itextsharp.dll" "C:\ProgramData\Autodesk\Revit\Addins\%25RevitYear%25\Pheinex\PEC Shared\"</PostBuildEvent>
   </PropertyGroup>
 </Project>
