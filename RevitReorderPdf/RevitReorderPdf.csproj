@@ -214,6 +214,6 @@ SET RevitYear=%25Config:~0,4%25
 call "C:\Users\greg\OneDrive - Pheinex LLC\Code\Signing\SignAndTimestamp.bat"  "$(ProjectDir)$(OutDir)$(TargetFileName)" 
 
 xcopy "$(ProjectDir)$(OutDir)RevitReorderPdf.dll" "C:\ProgramData\Autodesk\Revit\Addins\%25RevitYear%25\Pheinex\PEC Shared\" /F /R /Y /I
-copy "$(ProjectDir)$(OutDir)itextsharp.dll" "C:\ProgramData\Autodesk\Revit\Addins\%25RevitYear%25\Pheinex\PEC Shared\"</PostBuildEvent>
+xcopy "$(ProjectDir)$(OutDir)itextsharp.dll" "C:\ProgramData\Autodesk\Revit\Addins\%25RevitYear%25\Pheinex\PEC Shared\" /F /R /Y /I</PostBuildEvent>
   </PropertyGroup>
 </Project>
